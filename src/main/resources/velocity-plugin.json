@@ -1,0 +1,9 @@
+{
+  "id": "queue",
+  "name": "Queue",
+  "version": "${version}",
+  "description": "A queue system for Velocity proxy servers",
+  "authors": ["ProjectPersistence"],
+  "main": "org.projectpersistence.queue.Queue",
+  "dependencies": []
+}
