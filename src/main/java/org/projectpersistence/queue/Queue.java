@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 @Plugin(
 	id = "queue",
 	name = "Queue",
-	version = "1.0.0",
+	version = "1.1.0",
 	description = "A queue system for Velocity",
 	authors = {
 		"ProjectPersistence",
