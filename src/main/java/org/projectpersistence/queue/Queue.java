@@ -109,7 +109,13 @@ public class Queue {
     public void onPostLogin(PostLoginEvent event) {
         Player player = event.getPlayer();
 
-        // Check if player is admin - they bypass everything
+        // bypass permission skips queue entirely
+        if (player.hasPermission("queue.bypass")) {
+            connectToMainServer(player, true, true);
+            return;
+        }
+
+        // Existing admin bypass – kept for compatibility
         if (player.hasPermission("queue.admin")) {
             connectToMainServer(player, true, true);
             return;
@@ -147,6 +153,16 @@ public class Queue {
         if (serverName.equals(queueServerName)) {
             server.getScheduler()
                     .buildTask(this, () -> {
+                        // Bypass players go to front of queue if server is down
+                        if (player.hasPermission("queue.bypass")) {
+                            if (!mainServerOnline) {
+                                addToQueueFront(player);
+                            } else {
+                                connectToMainServer(player, true, true);
+                            }
+                            return;
+                        }
+
                         // Admins go to front of queue if server is down
                         if (player.hasPermission("queue.admin")) {
                             if (!mainServerOnline) {
@@ -344,9 +360,16 @@ public class Queue {
 
             Optional<Player> nextPlayer = server.getPlayer(nextPlayerId);
             if (nextPlayer.isPresent()) {
-                // Check if player is admin
-                boolean isAdmin = nextPlayer.get().hasPermission("queue.admin");
-                connectToMainServer(nextPlayer.get(), false, isAdmin);
+        boolean isAdmin   = nextPlayer.get().hasPermission("queue.admin");
+        boolean isBypass  = nextPlayer.get().hasPermission("queue.bypass");
+
+        connectToMainServer(
+                nextPlayer.get(),
+                false,          // not a priority pull
+                isAdmin,        // true only for real admins
+                isBypass        // true only for queue.bypass holders
+        );
+
                 if (!isAdmin) {
                     currentPlayers++;
                 }
