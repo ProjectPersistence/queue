@@ -3,7 +3,8 @@
   "name": "Queue",
   "version": "${version}",
   "description": "A queue system for Velocity proxy servers",
-  "authors": ["ProjectPersistence"],
+  "authors": ["ProjectPersistence", "B3CKDOOR"],
   "main": "org.projectpersistence.queue.Queue",
   "dependencies": []
+
 }
