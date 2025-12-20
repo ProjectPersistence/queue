@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
         name = "Queue",
         version = "1.0.0",
         description = "A queue system for Velocity",
-        authors = {"ProjectPersistence"}
+        authors = {"ProjectPersistence","B3CKDOOR"}
 )
 public class Queue {
 
@@ -810,7 +810,8 @@ public class Queue {
 
         private void handleCredits(CommandSource source) {
             source.sendMessage(Component.text("=== Queue Plugin Credits ===", NamedTextColor.GOLD));
-            source.sendMessage(Component.text("Developed by ProjectPersistence", NamedTextColor.YELLOW));
+            source.sendMessage(Component.text("Originally Developed by ProjectPersistence", NamedTextColor.YELLOW));
+            source.sendMessage(Component.text("Features added by B3CKDOOR", NamedTextColor.YELLOW));
             source.sendMessage(
                     Component.text("GitHub: ", NamedTextColor.YELLOW)
                             .append(Component.text("https://github.com/ProjectPersistence", NamedTextColor.AQUA)
