@@ -286,7 +286,7 @@ public class Queue {
      */
     private void connectToMainServer(Player player, boolean isPriority, boolean isAdmin, boolean forceBypass) {
         // If main server is offline and not admin/forced, send to queue
-        if (!mainServerOnline && !isAdmin && !forceBypass) {
+        if (!mainServerOnline && !forceBypass) {
             if (isPriority) {
                 player.sendMessage(Component.text("Main server is offline. Sending you to the queue server.", NamedTextColor.YELLOW));
                 addToQueue(player);
