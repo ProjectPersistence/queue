@@ -365,7 +365,7 @@ public class Queue {
 
             Optional<Player> nextPlayer = server.getPlayer(nextPlayerId);
             if (nextPlayer.isPresent()) {
-                // Check if player is admin
+                // Check if player has bypass permission
                 boolean isAdmin = nextPlayer.get().hasPermission("queue.bypass");
                 connectToMainServer(nextPlayer.get(), false, isBypass);
                     if (!isBypass) {
