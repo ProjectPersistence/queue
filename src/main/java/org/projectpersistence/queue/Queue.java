@@ -1,5 +1,4 @@
-﻿// Queue.java
-package org.projectpersistence.queue;
+﻿package org.projectpersistence.queue;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
@@ -109,11 +108,7 @@ public class Queue {
     public void onPostLogin(PostLoginEvent event) {
         Player player = event.getPlayer();
 
-        // Check if player is admin - they bypass everything
-        if (player.hasPermission("queue.admin")) {
-            connectToMainServer(player, true, true);
-            return;
-        }
+        // Removed admin bypass – admins are now treated like normal players
 
         // Check if player has queue bypass
         if (player.hasPermission("queue.bypass")) {
@@ -154,15 +149,7 @@ public class Queue {
         if (serverName.equals(queueServerName)) {
             server.getScheduler()
                     .buildTask(this, () -> {
-                        // Admins go to front of queue if server is down
-                        if (player.hasPermission("queue.admin")) {
-                            if (!mainServerOnline) {
-                                addToQueueFront(player);
-                            } else {
-                                connectToMainServer(player, true, true);
-                            }
-                            return;
-                        }
+                        // Removed admin bypass handling – admins are now treated like normal players unless they have queue.bypass
 
                         // Check if player has bypass (permission or config list)
                         if (player.hasPermission("queue.bypass")) {
