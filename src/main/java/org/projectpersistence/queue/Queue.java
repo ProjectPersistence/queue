@@ -319,18 +319,28 @@ public class Queue {
                     queueEntries.remove(player.getUniqueId());
 
                     if (forceBypass) {
-                        player.sendMessage(Component.text("You have been pulled from the queue by an admin!", NamedTextColor.GREEN));
+                        player.sendMessage(Component.text(
+                                "You have been pulled from the queue by an admin!",
+                                NamedTextColor.GREEN));
                     } else if (isAdmin) {
-                        player.sendMessage(Component.text("Connected to main server with admin access!", NamedTextColor.GOLD));
+                        player.sendMessage(Component.text(
+                                "Connected to main server with admin access!",
+                                NamedTextColor.GOLD));
                     } else if (isPriority) {
-                        player.sendMessage(Component.text("Connected to main server with priority access!", NamedTextColor.GREEN));
+                        player.sendMessage(Component.text(
+                                "Connected to main server with priority access!",
+                                NamedTextColor.GREEN));
                     } else {
-                        player.sendMessage(Component.text("Connected to main server!", NamedTextColor.GREEN));
+                        player.sendMessage(Component.text(
+                                "Connected to main server!",
+                                NamedTextColor.GREEN));
                     }
                 } else {
                     // Connection failed, add back to queue
                     if (!isAdmin && !forceBypass) {
-                        player.sendMessage(Component.text("Failed to connect to main server. Adding you to the queue.", NamedTextColor.RED));
+                        player.sendMessage(Component.text(
+                                "Failed to connect to main server. Adding you to the queue.",
+                                NamedTextColor.RED));
                         addToQueue(player);
                     }
                 }
@@ -374,7 +384,7 @@ public class Queue {
                     currentPlayers++;
                 }
 
-                // Update positions for remaining players
+        // Update positions for the remaining queued players
                 updateQueuePositions();
             } else {
                 // Player disconnected, remove from tracking
@@ -417,7 +427,9 @@ public class Queue {
             if (mainServerOnline) {
                 mainServerOnline = false;
                 logger.warn("Main server is not registered!");
-                notifyQueuePlayers(Component.text("The main server is offline. Queue processing paused.", NamedTextColor.RED));
+                notifyQueuePlayers(Component.text(
+                        "The main server is offline. Queue processing paused.",
+                        NamedTextColor.RED));
             }
             return;
         }
@@ -426,13 +438,17 @@ public class Queue {
             if (!mainServerOnline) {
                 mainServerOnline = true;
                 logger.info("Main server is back online!");
-                notifyQueuePlayers(Component.text("The main server is back online. Queue processing resumed.", NamedTextColor.GREEN));
+                notifyQueuePlayers(Component.text(
+                        "The main server is back online. Queue processing resumed.",
+                        NamedTextColor.GREEN));
             }
         }).exceptionally(throwable -> {
             if (mainServerOnline) {
                 mainServerOnline = false;
                 logger.warn("Main server appears to be offline!");
-                notifyQueuePlayers(Component.text("The main server is offline. Queue processing paused.", NamedTextColor.RED));
+                notifyQueuePlayers(Component.text(
+                        "The main server is offline. Queue processing paused.",
+                        NamedTextColor.RED));
             }
             return null;
         });
