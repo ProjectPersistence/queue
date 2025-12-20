@@ -115,12 +115,6 @@ public class Queue {
             return;
         }
 
-        // Existing admin bypass – kept for compatibility
-        if (player.hasPermission("queue.admin")) {
-            connectToMainServer(player, true, true);
-            return;
-        }
-
         // Check if player has priority (permission or config list)
         boolean hasPriority = player.hasPermission("queue.priority") ||
                 priorityPlayers.contains(player.getUniqueId());
@@ -167,8 +161,6 @@ public class Queue {
                         if (player.hasPermission("queue.admin")) {
                             if (!mainServerOnline) {
                                 addToQueueFront(player);
-                            } else {
-                                connectToMainServer(player, true, true);
                             }
                             return;
                         }
@@ -294,7 +286,7 @@ public class Queue {
 
     private void connectToMainServer(Player player, boolean isPriority, boolean isAdmin, boolean forceBypass) {
         // If main server is offline and not admin/forced, send to queue
-        if (!mainServerOnline && !isAdmin && !forceBypass) {
+        if (!mainServerOnline && !forceBypass) {
             if (isPriority) {
                 player.sendMessage(Component.text("Main server is offline. Sending you to the queue server.", NamedTextColor.YELLOW));
                 addToQueue(player);
@@ -364,12 +356,12 @@ public class Queue {
 
         int currentPlayers = mainServer.get().getPlayersConnected().size();
 
-        while (currentPlayers < mainServerMaxPlayers && !queueEntries.isEmpty()) {
-            UUID nextPlayerId = getNextInQueue();
-            if (nextPlayerId == null) break;
+while (currentPlayers < mainServerMaxPlayers && !queueEntries.isEmpty()) {
+    UUID nextPlayerId = getNextInQueue();
+    if (nextPlayerId == null) break;
 
-            Optional<Player> nextPlayer = server.getPlayer(nextPlayerId);
-            if (nextPlayer.isPresent()) {
+    Optional<Player> nextPlayer = server.getPlayer(nextPlayerId);
+    if (nextPlayer.isPresent()) {
         boolean isAdmin   = nextPlayer.get().hasPermission("queue.admin");
         boolean isBypass  = nextPlayer.get().hasPermission("queue.bypass");
 
@@ -380,18 +372,18 @@ public class Queue {
                 isBypass        // true only for queue.bypass holders
         );
 
-                if (!isAdmin) {
-                    currentPlayers++;
-                }
+        if (!isAdmin) {
+            currentPlayers++;
+        }
 
         // Update positions for the remaining queued players
-                updateQueuePositions();
-            } else {
+        updateQueuePositions();
+    } else {
                 // Player disconnected, remove from tracking
-                queueEntries.remove(nextPlayerId);
-                playersInQueue.remove(nextPlayerId);
-            }
-        }
+        queueEntries.remove(nextPlayerId);
+        playersInQueue.remove(nextPlayerId);
+    }
+}
     }
 
     private UUID getNextInQueue() {
