@@ -1,4 +1,4 @@
-// Queue.java
+﻿// Queue.java
 package org.projectpersistence.queue;
 
 import com.google.inject.Inject;
@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
         name = "Queue",
         version = "1.0.0",
         description = "A queue system for Velocity",
-        authors = {"ProjectPersistence"}
+        authors = {"B3CKDOOR"}
 )
 public class Queue {
 
@@ -115,6 +115,13 @@ public class Queue {
             return;
         }
 
+        // Check if player has queue bypass
+        if (player.hasPermission("queue.bypass")) {
+            // forceBypass = true → ignore max‑player limit
+            connectToMainServer(player, false, false, true);
+            return;
+        }
+
         // Check if player has priority (permission or config list)
         boolean hasPriority = player.hasPermission("queue.priority") ||
                 priorityPlayers.contains(player.getUniqueId());
@@ -157,7 +164,18 @@ public class Queue {
                             return;
                         }
 
-                        // Check if player has priority (permission or config list)
+                        // Check if player has bypass (permission or config list)
+                        if (player.hasPermission("queue.bypass")) {
+                            if (!mainServerOnline) {
+                                addToQueueFront(player);               // front‑of‑queue when main is down
+                            } else {
+                                // force bypass the max‑player check
+                                connectToMainServer(player, false, false, true);
+                            }
+                            return;
+                        }
+
+                        // Check if player has Priority (permission or config list)
                         boolean hasPriority = player.hasPermission("queue.priority") ||
                                 priorityPlayers.contains(player.getUniqueId());
 
@@ -276,6 +294,9 @@ public class Queue {
         connectToMainServer(player, isPriority, isAdmin, false);
     }
 
+    /**
+     * @param forceBypass if true, ignore max‑player limit (used for queue.bypass)
+     */
     private void connectToMainServer(Player player, boolean isPriority, boolean isAdmin, boolean forceBypass) {
         // If main server is offline and not admin/forced, send to queue
         if (!mainServerOnline && !isAdmin && !forceBypass) {
@@ -345,10 +366,11 @@ public class Queue {
             Optional<Player> nextPlayer = server.getPlayer(nextPlayerId);
             if (nextPlayer.isPresent()) {
                 // Check if player is admin
-                boolean isAdmin = nextPlayer.get().hasPermission("queue.admin");
-                connectToMainServer(nextPlayer.get(), false, isAdmin);
-                if (!isAdmin) {
-                    currentPlayers++;
+                boolean isAdmin = nextPlayer.get().hasPermission("queue.bypass");
+                connectToMainServer(nextPlayer.get(), false, isBypass);
+                    if (!isBypass) {
+                        currentPlayers++;
+                    }
                 }
 
                 // Update positions for remaining players
@@ -810,7 +832,7 @@ public class Queue {
 
         private void handleCredits(CommandSource source) {
             source.sendMessage(Component.text("=== Queue Plugin Credits ===", NamedTextColor.GOLD));
-            source.sendMessage(Component.text("Developed by ProjectPersistence", NamedTextColor.YELLOW));
+            source.sendMessage(Component.text("Developed by B3CKDOOR", NamedTextColor.YELLOW));
             source.sendMessage(
                     Component.text("GitHub: ", NamedTextColor.YELLOW)
                             .append(Component.text("https://github.com/ProjectPersistence", NamedTextColor.AQUA)
