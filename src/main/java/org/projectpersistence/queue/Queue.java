@@ -347,10 +347,11 @@ public class Queue {
 						player.sendMessage(Component.text(
 							"Connected to main server with admin access!",
 							NamedTextColor.GOLD));
-					} else if (isPriority) {
-						player.sendMessage(Component.text(
-							"Connected to main server with priority access!",
-							NamedTextColor.GREEN));
+					// ** For now commented out due to "cannot find symbol" **
+					//} else if (isPriority) {
+					//	player.sendMessage(Component.text(
+					//		"Connected to main server with priority access!",
+					//		NamedTextColor.GREEN));
 					} else if (isBypass) {
 						player.sendMessage(Component.text(
 							"Connected to main server with queue bypass access!",
