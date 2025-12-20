@@ -351,6 +351,10 @@ public class Queue {
 						player.sendMessage(Component.text(
 							"Connected to main server with priority access!",
 							NamedTextColor.GREEN));
+					} else if (isBypass) {
+						player.sendMessage(Component.text(
+							"Connected to main server with queue bypass access!",
+							NamedTextColor.GREEN));
 					} else {
 						player.sendMessage(Component.text(
 							"Connected to main server!",
