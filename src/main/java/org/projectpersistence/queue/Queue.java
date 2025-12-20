@@ -818,7 +818,12 @@ public class Queue {
 			Player player = (Player) source;
 
 			if (player.hasPermission("queue.admin")) {
-				source.sendMessage(Component.text("You have admin access - you bypass the queue!", NamedTextColor.GOLD));
+				source.sendMessage(Component.text("You have admin access!", NamedTextColor.GOLD));
+				return;
+			}
+
+			if (player.hasPermission("queue.bypass")) {
+				source.sendMessage(Component.text("You have bypassed the queue!", NamedTextColor.GOLD));
 				return;
 			}
 
