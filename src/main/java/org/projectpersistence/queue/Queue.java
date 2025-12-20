@@ -36,7 +36,8 @@ import java.util.concurrent.TimeUnit;
 	version = "1.0.0",
 	description = "A queue system for Velocity",
 	authors = {
-		"ProjectPersistence", "B3CKDOOR"
+		"ProjectPersistence",
+		"B3CKDOOR"
 	}
 )
 
