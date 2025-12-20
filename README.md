@@ -19,7 +19,7 @@ A simple queue mod for Minecraft Java Edition. Lightweight, works on essentially
 - **Real-Time Position Updates** - Action bar displays current queue position and points
 
 ### Admin Access System
-- **Admin Bypass** (`queue.admin`) - Always bypass the queue, can join even when server is over max capacity
+- **Admin Bypass** (`queue.admin`) - can join even when server is over max capacity
 - **Force Pull Players** - Admins can force pull any player from the queue directly to the main server, bypassing max capacity
 
 ### Server Management
@@ -110,9 +110,13 @@ default-seconds: 60      # Default for players without permissions
 **Player Permissions:**
 - Custom tier permissions defined in `queue-points.yml` (e.g., `queue.vip.diamond`, `queue.vip.gold`, etc.)
 
+**Bypass Permissions:**
+- `queue.bypass` - Bypasses queue:
+  - Bypass queue entirely
+  - If server is down, placed at front of queue with maximum priority
+
 **Admin Permissions:**
 - `queue.admin` - Full admin access:
-  - Bypass queue entirely
   - Join even when server is over max capacity
   - Access to all admin commands
   - If server is down, placed at front of queue with maximum priority
