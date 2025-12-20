@@ -34,7 +34,7 @@ tasks {
     }
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 25
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
 }
